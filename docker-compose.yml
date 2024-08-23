@@ -1,0 +1,26 @@
+volumes:
+  volume_www-data:
+  volume_ssh:
+  volume_log:
+  volume_config:
+networks:
+  internal:
+    driver: bridge
+services:
+  service1:
+    image: amardi/vm-wd:latest
+    env_file:
+      - .env
+    privileged: true
+    hostname: "${HOST_NAME}"
+    build: ./vm
+    ports:
+      - "${SSH_PORT}:22"
+      - "${WEB_PORT}:80"
+    volumes:
+      - volume_www-data:/home/www-data
+      - volume_log:/var/log
+      - volume_ssh:/etc/ssh/volume
+    restart: always
+    networks:
+      - internal
