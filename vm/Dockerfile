@@ -22,7 +22,7 @@ COPY entrypoint.sh /usr/local/bin/
 COPY rsyslog.conf /etc/rsyslog.conf
 RUN sed -i 's#\(root:[^:]*:[^:]*:[^:]*:[^:]*:[^:]*:\)[^:]*#\1/bin/bash#' /etc/passwd
 RUN mkdir -p /var/www
-RUN adduser -u 82 -D -G www-data www-data
+RUN adduser -u 82 -D -h /var/www -G www-data www-data
 RUN sed -i '/^www-data:/ s/:!/:/' /etc/shadow
 RUN chown -R www-data:www-data /var/www
 RUN usermod -a -G docker www-data
